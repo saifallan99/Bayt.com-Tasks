@@ -1,0 +1,26 @@
+<% layout('layouts/boilerplate')%>
+
+<div id="map" style="width: 100%; height: 600px"></div>
+
+<script>
+     mapboxgl.accessToken =
+       "pk.eyJ1IjoiZ3VzdGVsbG8xZyIsImEiOiJja254OHprbjYxNDhxMm9ybXRxeTRwdWNrIn0.rqSoirlR4XFZgl40fBFeYw";
+     const map = new mapboxgl.Map({
+       container: "map",
+       style: "mapbox://styles/mapbox/streets-v11",
+       center: [55.2962, 25.2684],
+       zoom: 6,
+     });
+	 
+  <% reformattedFeed.forEach(item=> { %>
+  console.log(<%=item.geoData.coordinates%>)
+     new mapboxgl.Marker()
+       .setLngLat([<%=item.geoData.coordinates%>])
+       .setPopup(
+         new mapboxgl.Popup({ offset: 25 }).setHTML(
+           `<h3> <%=item.title%> </h3><p> <%=item.location%> </p>`
+         )
+       )
+       .addTo(map);
+  <%}) %>
+</script>
